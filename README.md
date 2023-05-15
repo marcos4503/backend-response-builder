@@ -147,6 +147,19 @@ The Body of responses built by this library is the JSON that contains all the va
 
 The Separator is always the second line of responses created by this library. The separator is ALWAYS `<br/>` and this serves only as a delimiting zone so that the Client always knows where the response header ends and where the response body begins. That way, the Client can easily separate the Header from the JSON when reading responses created by this library.
 
+<h3>In Summary...</h3>
+
+```md
+noResponseHeaderDefined                          <- Response Header
+<br/>                                            <- Response Separator
+{                                                '''|
+    "brand": "honda",                               |
+    "model": "civic",                               |
+    "year": 2017,                                   | <- Response Body (JSON)
+    "processingTime": "0.00003194808960"            |
+}                                                ...|
+```
+
 # How the Client should read the responses
 
 a
