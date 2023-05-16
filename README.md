@@ -98,7 +98,7 @@ $response->BuildAndPrintTheResponseToClient();
 
 This PHP code will produce the following response (in text plain) when accessed by some Client...
 
-```json
+```md
 noResponseHeaderDefined
 <br/>
 {
