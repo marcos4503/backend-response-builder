@@ -227,7 +227,112 @@ if (header.Contains("success") == true){
 
 <b>Last Step:</b> If the Header string contains the expected success message, then the Client is ready to read the JSON (Body) string of the response! After deserializing the JSON, the Client can start reading the variables obtained from your PHP API response! That's all you need to know to program your Clients and Frontends to read the responses produced by this library!
 
-# s
+# Adding Objects (Classes) to response
+
+Before we move on to the more advanced part of this library, you need to learn about how to add Objects or Classes to the response JSON!
+
+An Object, in JSON is like another JSON code inside a variable. This JSON code that we call an Object can contain more variables within it. It's a great way to represent multiple instances of the same Class, for example, so that the Client can read the information in a more organized and structured way!
+
+For example, let's say we want to return in our API, the name "Parzival James" and his 2 cars that he owns, but each car must be represented by an object. We can do this with this library as follows...
+
+First, we declare the variable names. Next we need to use method `DeclareStructuredClass()` to declare a Class in which we will create two instances to represent Parzival two cars. Then we use method `DeclareVariablePrimitiveInClass()` to add "properties" to this Class, which we will use to inform the brand and model of each car. We can do this in the following way...
+
+```php
+<?php
+
+$response->DeclareVariablePrimitive("name", "STRING");
+$response->DeclareVariablePrimitive("car1", "OBJECT");
+$response->DeclareVariablePrimitive("car2", "OBJECT");
+
+$response->DeclareStructuredClass("Car");
+$response->DeclareVariablePrimitiveInClass("Car", "brand", "STRING");
+$response->DeclareVariablePrimitiveInClass("Car", "model", "STRING");
+
+?>
+```
+
+Now, we need to create two instances of the `Car` class we created, for this, use the `CreateNewObjectInstanceOfClass()` method to create the instances of the class then use method `SetVariablePrimitiveValueInInstancedObject()` to inform the brand and model of the cars! This can be done as follows...
+
+```php
+<?php
+
+$response->SetVariablePrimitiveValue("name", "Parzival James");
+
+$car1Reference = $response->CreateNewObjectInstanceOfClass("Car");
+$response->SetVariablePrimitiveValueInInstancedObject($car1Reference, "brand", "Honda");
+$response->SetVariablePrimitiveValueInInstancedObject($car1Reference, "model", "Civic");
+
+$car2Reference = $response->CreateNewObjectInstanceOfClass("Car");
+$response->SetVariablePrimitiveValueInInstancedObject($car2Reference, "brand", "Toyota");
+$response->SetVariablePrimitiveValueInInstancedObject($car2Reference, "model", "Corolla");
+
+?>
+```
+
+Now, we already have two instances of the `Car` class with data for each car, but these instances won't appear in the response unless we link these instantiated Objects to some variable that appears in the response! In this case, we have the `car1` and `car2` variables, so we only need to link the two instantiated Objects to these variables and we will have both Objects appearing in our API response!
+
+```php
+<?php
+
+$response->LinkObjectToVariablePrimitive("car1", $car1Reference);
+$response->LinkObjectToVariablePrimitive("car2", $car2Reference);
+
+?>
+```
+
+This is the final code!
+
+```php
+<?php
+
+//Prepare the response
+$response = new ResponseBuilder();
+
+$response->DeclareVariablePrimitive("name", "STRING");
+$response->DeclareVariablePrimitive("car1", "OBJECT");
+$response->DeclareVariablePrimitive("car2", "OBJECT");
+
+$response->DeclareStructuredClass("Car");
+$response->DeclareVariablePrimitiveInClass("Car", "brand", "STRING");
+$response->DeclareVariablePrimitiveInClass("Car", "model", "STRING");
+
+$response->SetVariablePrimitiveValue("name", "Parzival James");
+
+$car1Reference = $response->CreateNewObjectInstanceOfClass("Car");
+$response->SetVariablePrimitiveValueInInstancedObject($car1Reference, "brand", "Honda");
+$response->SetVariablePrimitiveValueInInstancedObject($car1Reference, "model", "Civic");
+
+$car2Reference = $response->CreateNewObjectInstanceOfClass("Car");
+$response->SetVariablePrimitiveValueInInstancedObject($car2Reference, "brand", "Toyota");
+$response->SetVariablePrimitiveValueInInstancedObject($car2Reference, "model", "Corolla");
+
+$response->LinkObjectToVariablePrimitive("car1", $car1Reference);
+$response->LinkObjectToVariablePrimitive("car2", $car2Reference);
+
+//Print the response to Client
+$response->BuildAndPrintTheResponseToClient();
+
+?>
+```
+
+And this is the response produced by this code!
+
+```md
+noResponseHeaderDefined
+<br/>
+{
+    "name": "",
+    "car1": {
+        "brand": "Honda",
+        "model": "Civic"
+    },
+    "car2": {
+        "brand": "Toyota",
+        "model": "Corolla"
+    },
+    "processingTime": "0.00004982948303"
+}
+```
 
 # Support projects like this
 
