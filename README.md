@@ -162,7 +162,33 @@ noResponseHeaderDefined                          <- Response Header
 
 # How the Client should read the responses
 
-a
+As previously mentioned, when calling the `BuildAndPrintTheResponseToClient()` method, the library will process all the declared variables and their respective values and then generate the response with the Header and Body structure that you saw above.
+
+For a Client to read the response obtained from this library, it must first access your PHP API, sending the POST/GET data (if necessary) and as it would normally access any PHP page. When accessing, it then must obtain the text resulting from the request to its PHP API. The text resulting from the request is exactly the response produced by your PHP API, that is, the text generated when calling the `BuildAndPrintTheResponseToClient()` method of this library!
+
+Now, let's see step by step what the Client must do to read the response provided by this library correctly!
+
+<b>First Step:</b> With the text resulting from the request ready, the first thing the Client must do is SPLIT this text using the `<br/>` separator. But this separation should only separate the FIRST occurrence of the `<br/>` separator. This way, the Client will obtain an array with `2` elements, where element `0` is the Header of the response, and element `1` is the Body (JSON) from the response. For example...
+
+This can be done with Javascript as follows...
+
+```javascript
+//Split the response to get the Header and Body (JSON)
+var splitedResponse = requestText.split(/<br\/>(.*)/);
+var header = splitedResponse[0];
+var body = splitedResponse[1];
+```
+
+And it can be done with C# as follows...
+
+```c#
+//Split the response to get the Header and Body (JSON)
+string splitedResponse = requestText.Split(new string[] { "<br/>" }, 2, StringSplitOptions.None);
+string header = splitedResponse[0];
+string body = splitedResponse[1];
+```
+
+<b>Second Step:</b> a
 
 # Support projects like this
 
