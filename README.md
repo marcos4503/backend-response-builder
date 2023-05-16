@@ -479,7 +479,7 @@ $response->AddItemToVariableArrayInInstancedObject($carObjectReference, "years",
 
 <h3>Linking an instanced Object to a Primitive variable</h3>
 
-As stated earlier, an instanced Object will not appear in your PHP API response until it is bound to a variable.
+As stated earlier, an instanced Object will not appear in your PHP API response until it is linked to a variable.
 
 To link an instantiated Object to a Primitive variable, it must be of type `OBJECT`. Then, you must use the `LinkObjectToVariablePrimitive()` method. When calling this method you must pass the variable name and the reference to the instantiated object.
 
