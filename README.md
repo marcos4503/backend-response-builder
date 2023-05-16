@@ -188,7 +188,46 @@ string header = splitedResponse[0];
 string body = splitedResponse[1];
 ```
 
-<b>Second Step:</b> a
+<b>Second Step:</b> Now the Client must read the Header to get a quick summary of what the response it gets from the PHP API is all about! So, if the Header CONTAINS what the Client expects to be a success message, then ONLY after that it should start reading the Body (JSON) of the response. It can do this by deserializing the JSON and converting it into an object to read each variable present for example.
+
+This can be done with Javascript as follows...
+
+```javascript
+//Split the response to get the Header and Body (JSON)
+var splitedResponse = requestText.split(/<br\/>(.*)/);
+var header = splitedResponse[0];
+var body = splitedResponse[1];
+
+//If the header contains the "success" message, read the JSON
+if (header.includes("success") == true){
+
+    //read the JSON...
+    var jsonResponse = JSON.parse(body);
+
+}
+```
+
+And it can be done with C# as follows...
+
+```c#
+//Split the response to get the Header and Body (JSON)
+string splitedResponse = requestText.Split(new string[] { "<br/>" }, 2, StringSplitOptions.None);
+string header = splitedResponse[0];
+string body = splitedResponse[1];
+
+//If the header contains the "success" message, read the JSON
+if (header.Contains("success") == true){
+
+    //read the JSON...
+
+}
+```
+
+<b>IMPORTANT!</b> It is important that the Header comparison is done by checking whether the Header string **CONTAINS** the expected success message, and **never** checking whether the Header string is **EQUAL** to an expected message. This is because, as the Header string is the first line, it may contain unexpected characters like BOM characters, "\n" etc. Therefore, when reading and comparing the Header string, never compare using **EQUALITY**, but only check that the Header string **CONTAINS** the expected success message!
+
+<b>Last Step:</b> If the Header string contains the expected success message, then the Client is ready to read the JSON (Body) string of the response! After deserializing the JSON, the Client can start reading the variables obtained from your PHP API response! That's all you need to know to program your Clients and Frontends to read the responses produced by this library!
+
+# s
 
 # Support projects like this
 
