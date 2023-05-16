@@ -455,6 +455,8 @@ $carObjectReference = $response->CreateNewObjectInstanceOfClass("Car");
 ?>
 ```
 
+<h3>Editing variables that are inside an instanced Object</h3>
+
 To edit a Primitive variable that is inside an instantiated Object, you must use the `SetVariablePrimitiveValueInInstancedObject()` method. It works exactly the same way as the `SetVariablePrimitiveValue()` method, however, it only works to edit variables that are inside an instantiated Object. When calling the `SetVariablePrimitiveValueInInstancedObject()` method, you must pass the reference to the Object instantiated, the name of the variable to be edited and the new value you want to define!
 
 ```php
@@ -475,7 +477,55 @@ $response->AddItemToVariableArrayInInstancedObject($carObjectReference, "years",
 ?>
 ```
 
-a
+<h3>Linking an instanced Object to a Primitive variable</h3>
+
+As stated earlier, an instanced Object will not appear in your PHP API response until it is bound to a variable.
+
+To link an instantiated Object to a Primitive variable, it must be of type `OBJECT`. Then, you must use the `LinkObjectToVariablePrimitive()` method. When calling this method you must pass the variable name and the reference to the instantiated object.
+
+```php
+<?php
+
+$response->LinkObjectToVariablePrimitive("car", $carObjectReference);
+
+?>
+```
+
+If you want to link the instantiated Object to a variable that is inside ANOTHER instantiated Object, you must use the `LinkObjectToVariablePrimitiveInInstancedObject()` method. It works like the `LinkObjectToVariablePrimitive()` method, however, it will only work for a primitive variable that is inside another instantiated Object. When calling the `LinkObjectToVariablePrimitiveInInstancedObject()` method, you must pass the reference to the Object instantiated where the variable is, the name of the variable and the reference to the Object instantiated you want to link the variable.
+
+```php
+<?php
+
+$response->LinkObjectToVariablePrimitiveInInstancedObject($anotherObject, "car", $carObjectReference);
+
+?>
+```
+
+<h3>Adding an instantiated Object to an Array</h3>
+
+To add an instantiated Object to a Array variable, it must be of type `OBJECT`. Then, you must use the `AddLinkOfObjectToVariableArray()` method. When calling this method you must pass the variable name and the reference to the instantiated object.
+
+```php
+<?php
+
+$response->AddLinkOfObjectToVariableArray("cars", $carObjectReference);
+
+?>
+```
+
+If you want to add the instantiated Object to a variable that is inside ANOTHER instantiated Object, you must use the `AddLinkOfObjectToVariableArrayInInstancedObject()` method. It works like the `AddLinkOfObjectToVariableArray()` method, however, it will only work for a Array variable that is inside another instantiated Object. When calling the `AddLinkOfObjectToVariableArrayInInstancedObject()` method, you must pass the reference to the Object instantiated where the variable is, the name of the variable and the reference to the Object instantiated you want to add to array.
+
+```php
+<?php
+
+$response->AddLinkOfObjectToVariableArrayInInstancedObject($anotherObject, "cars", $carObjectReference);
+
+?>
+```
+
+# That is all!
+
+Now you know how to use every aspect of this library! With everything shown here, you can now create JSON responses <b>HOWEVER YOU WANT!</b> Either with an Array of Objects, with Objects with an Array of Objects, etc. You can create JSON responses however you like with everything you've been taught here, by using the Backend Response Builder! Enjoy the library!
 
 # Support projects like this
 
