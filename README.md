@@ -439,9 +439,43 @@ $response->AddItemToVariableArray("brands", "Mazda");
 ?>
 ```
 
+<b>NOTE:</b> You are only able to add values to Arrays from this library. It is not possible to remove values or set new values at a given index, so plan your PHP logic accordingly!
+
 <h3>Instantiating Objects from Classes</h3>
 
+As you read in the previous topic, it is possible to instantiate Objects from declared Classes. These Objects can have their variables edited and then it is possible to include these Objects instantiated in your PHP API response!
 
+To instantiate an Object from a Class, use the `CreateNewObjectInstanceOfClass()` method. You must inform the name of a Class that you have already declared before. When instantiating this Object, you will be creating a copy of this Class, this copy will become an Object. The `CreateNewObjectInstanceOfClass()` method will return you a reference to this instantiated Object. Save this reference as you will need it if you want to edit the Object's variables, or link the instantiated Object to a variable, or add the instantiated Object to an Array!
+
+```php
+<?php
+
+$carObjectReference = $response->CreateNewObjectInstanceOfClass("Car");
+
+?>
+```
+
+To edit a Primitive variable that is inside an instantiated Object, you must use the `SetVariablePrimitiveValueInInstancedObject()` method. It works exactly the same way as the `SetVariablePrimitiveValue()` method, however, it only works to edit variables that are inside an instantiated Object. When calling the `SetVariablePrimitiveValueInInstancedObject()` method, you must pass the reference to the Object instantiated, the name of the variable to be edited and the new value you want to define!
+
+```php
+<?php
+
+$response->SetVariablePrimitiveValueInInstancedObject($carObjectReference, "brand", "Honda");
+
+?>
+```
+
+To add a value to an Array that is inside an instanced Object you must use the `AddItemToVariableArrayInInstancedObject` method. It works exactly the same way as the `AddItemToVariableArray()` method, however, it only works to edit variables that are inside an instantiated Object. When calling the `AddItemToVariableArrayInInstancedObject()` method, you must pass the reference to the Object instantiated, the name of the variable to be edited and the new value you want to add!
+
+```php
+<?php
+
+$response->AddItemToVariableArrayInInstancedObject($carObjectReference, "years", 2018);
+
+?>
+```
+
+a
 
 # Support projects like this
 
