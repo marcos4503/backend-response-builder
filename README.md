@@ -174,7 +174,7 @@ This can be done with Javascript as follows...
 
 ```javascript
 //Split the response to get the Header and Body (JSON)
-var splitedResponse = requestText.split(/<br\/>(.*)/);
+var splitedResponse = requestText.split(/<br\/>(.*)/).filter(part => part);
 var header = splitedResponse[0];
 var body = splitedResponse[1];
 ```
@@ -194,7 +194,7 @@ This can be done with Javascript as follows...
 
 ```javascript
 //Split the response to get the Header and Body (JSON)
-var splitedResponse = requestText.split(/<br\/>(.*)/);
+var splitedResponse = requestText.split(/<br\/>(.*)/).filter(part => part);
 var header = splitedResponse[0];
 var body = splitedResponse[1];
 
